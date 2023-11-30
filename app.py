@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, g
 import traceback
-import csv
 from password_crack import authenticate, hash_pw
 from database import add_user, get_access_level, get_password, get_all_usernames
 
@@ -11,12 +10,6 @@ PASSWORD_MAX_LENGTH = 25
 SPECIAL_CHAR = "!@#$%^&*"
 
 loginAttempts = 1
-
-
-# Dictionaries for employee credentials and access levels
-employeeLogins = {}
-employeeAccess = {}
-employeeDataFile = 'data/employeeData.csv'
 
 # Function to validate user credentials
 def login(username, password):
@@ -113,7 +106,7 @@ def create_user():
         username = request.form['username']
         password = request.form['password']
         # check if username is available
-        if username not in employeeAccess:
+        if username not in get_all_usernames():
             # validate password
             if password_strength(password):
                 hashedPassword = hash_pw(password)

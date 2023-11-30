@@ -64,3 +64,4 @@ def authenticate(stored, plain_text, salt_length=None) -> bool:
     return this_hash == stored_hash  # compare
 
 #authenticate('1a642ab5a12a39661cedc89c686b1ca335ea1df866a8134deddd52af813e41791a718d386ec9fde0ed7c196c21c4c59ee4357b5aca4ac04b9276742c', 'class')
+print(authenticate('ddba180a108ff40d59e7467fd252777bc3f4bdd6b5f8a85967b61e4dd626140b9d7d83660aff3ba5fec0cd8b06b08b5bc9331615bc6f250e4b1d6ec4', 'Password123!'))
