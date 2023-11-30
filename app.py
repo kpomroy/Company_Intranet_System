@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, g
 import traceback
 import csv
 from password_crack import authenticate, hash_pw
-from database import add_user, get_password
+from database import add_user, get_access_level, get_password, get_all_usernames
 
 app = Flask(__name__)
 
@@ -18,27 +18,11 @@ employeeLogins = {}
 employeeAccess = {}
 employeeDataFile = 'data/employeeData.csv'
 
-# Function to retrieve employee login info and access info from the csv and save it in two dicitonaries
-def getEmployeeInfo():
-    try:
-        with open(employeeDataFile, 'r') as file:
-            csvreader = csv.reader(file)
-            # skip header row
-            next(csvreader, None)
-
-            for row in csvreader:
-                username, hashedPassword, access_level = row
-                # populate dictionaries
-                employeeLogins[username] = hashedPassword
-                employeeAccess[username] = access_level
-    except FileNotFoundError:
-        print(f"File '{employeeDataFile}' not found")
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
-
 # Function to validate user credentials
 def login(username, password):
-    if username in employeeLogins:
+    usernames = get_all_usernames()
+    print(usernames)
+    if username in usernames:
         storedPassword = get_password(username)
         return authenticate(storedPassword, password)
     return False
@@ -84,14 +68,15 @@ def password_strength(test_password) -> bool:
 # engineer: access to Time Reporting, IT Helpdesk, Engineering Documents, and Exit
 # intern: access to Time Reporting, IT Helpdesk, and Exit
 def checkEmployeeAccess(username, choice):
-    if(employeeAccess[username] == 'admin'):
+    accessLevel = get_access_level(username)
+    if(accessLevel == 'admin'):
         return True
-    elif(employeeAccess[username] == 'accountant'):
+    elif(accessLevel == 'accountant'):
         if (choice != 4):
             return True
         else:
             return False
-    elif(employeeAccess[username] == 'engineer'):
+    elif(accessLevel == 'engineer'):
         if (choice != 2):
             return True
         else:
@@ -133,7 +118,7 @@ def create_user():
             if password_strength(password):
                 hashedPassword = hash_pw(password)
                 add_user(username, hashedPassword)
-                return render_template('login.html', error='User sucessfully created')
+                return redirect('/')
             else:
                 return render_template('new_user.html', error = 'Password not complex enough')
         else:
@@ -175,7 +160,6 @@ def new_user():
 
 if __name__ == '__main__':
     try:
-        getEmployeeInfo()
         app.run(debug=True, host='localhost', port=8097)
     except Exception as err:
         traceback.print_exc()

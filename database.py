@@ -69,6 +69,22 @@ def clear_table():
         if conn is not None:
             conn.close()
 
+def get_all_usernames():
+    usernames = []
+    try:
+        conn = sqlite3.connect('user.db')
+        c = conn.cursor()
+        for row in c.execute("SELECT username FROM users"):
+            usernames.append(row[0])
+        return usernames
+    except sqlite3.DatabaseError:
+        print("Error. Could not retrieve data.")
+    finally:
+        if c is not None:
+            c.close()
+        if conn is not None:
+            conn.close()
+
 def get_password(username):
     try:
         conn = sqlite3.connect('user.db')
@@ -76,6 +92,21 @@ def get_password(username):
         for row in c.execute("SELECT hashedPassword FROM users WHERE username='" + username + "'"):
             password = row[0]
         return password
+    except sqlite3.DatabaseError:
+        print("Error. Could not retrieve data.")
+    finally:
+        if c is not None:
+            c.close()
+        if conn is not None:
+            conn.close()
+
+def get_access_level(username):
+    try:
+        conn = sqlite3.connect('user.db')
+        c = conn.cursor()
+        for row in c.execute("SELECT accessLevel FROM users WHERE username='" + username + "'"):
+            accessLevel = row[0]
+        return accessLevel
     except sqlite3.DatabaseError:
         print("Error. Could not retrieve data.")
     finally:
@@ -100,7 +131,7 @@ def query_db():
         if conn is not None:
             conn.close()
 
-
+# clear_table()
 # add_user('kevin', 'f26d84aa5a093ea43137e50dcc3ba6747d7815d3aa9319f3f6894600f5599728cd45cb069cb2262c5d37e79fc7f7ba10314d65af49146cd97b99b0b2', 'admin')
 # add_user('eric', '3abad61c46327e9c269e5a37f25b3afb7f7e50c946d719fd7a9dc803a62d19300cae5fa6301da887feb0980b7c0a25721291d62afd9ac7e3858a0a27', 'accountant')
 # add_user('rye', '80cb2ae3e5effc043ba0964f600a5dd6176204e2decd7077cb4fca8682bb18399078ff0fcbbd9486701e887c8df6d4d5ec6ff9a9fe9646fa56fcf259', 'engineer')
