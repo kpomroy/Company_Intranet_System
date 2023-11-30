@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    <ul>
+        <li><a href="{{ url_for('menu_option', username=username, choice=1) }}">Time Reporting</a></li>
+        <li><a href="{{ url_for('menu_option', username=username, choice=2) }}">Accounting</a></li>
+        <li><a href="{{ url_for('menu_option', username=username, choice=3) }}">IT Helpdesk</a></li>
+        <li><a href="{{ url_for('menu_option', username=username, choice=4) }}">Engineering Documents</a></li>
+        <li><a href="{{ url_for('exit') }}">Exit</a></li>
+    </ul>
+</body>
+</html>
