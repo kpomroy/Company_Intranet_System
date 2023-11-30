@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>New User</title>
 </head>
 <body>
-    <h1>Login</h1>
+    <h1>New User</h1>
     <form method="post">
         <label for="username">Username:</label>
         <input type="text" name="username" required><br>
         <label for="password">Password:</label>
         <input type="password" name="password" required><br>
-        <button type="submit">Login</button>
+        <button type="submit">Create Account</button>
     </form>
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
-    <a href= "/new_user">Create New User</a>
 </body>
 </html>
