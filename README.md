@@ -12,6 +12,9 @@ To set up the database, either include the user.db file in the directory, or unc
 
 For testing, the usernames and passwords are as follows:
 kevin, Password123!
+
 eric, Password123!
+
 rye, Password123!
+
 harry, Password123!
