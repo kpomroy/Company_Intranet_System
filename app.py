@@ -83,6 +83,20 @@ def create_user():
 @app.route('/new_user/password', methods= ['GET', 'POST'])
 def create_user_password():
     randPassword = generate_password()
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        # check if username is available
+        if username not in get_all_usernames():
+            # validate password
+            if password_strength(password):
+                hashedPassword = hash_pw(password)
+                add_user(username, hashedPassword)
+                return redirect('/')
+            else:
+                return render_template('new_user.html', error = 'Password not complex enough')
+        else:
+            return render_template('new_user.html', error='Username not available')
     return render_template('new_user.html', password=randPassword)
 
 # Flask route for the menu page
