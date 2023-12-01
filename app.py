@@ -69,12 +69,13 @@ def create_user():
         # check if username is available
         if username not in get_all_usernames():
             # validate password
-            if password_strength(password):
+            valid, reason = password_strength(password)
+            if valid:
                 hashedPassword = hash_pw(password)
                 add_user(username, hashedPassword)
                 return redirect('/')
             else:
-                return render_template('new_user.html', error = 'Password not complex enough')
+                return render_template('new_user.html', error = reason)
         else:
             return render_template('new_user.html', error='Username not available')
     return render_template('new_user.html')

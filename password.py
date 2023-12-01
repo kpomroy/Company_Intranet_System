@@ -64,7 +64,7 @@ def authenticate(stored, plain_text, salt_length=None) -> bool:
     this_hash = hashlib.sha1(hashable).hexdigest()  # hash and digest
     return this_hash == stored_hash  # compare
 
-def password_strength(test_password) -> bool:
+def password_strength(test_password):
     """
     Check basic password strength. Return true if password
     meets minimum complexity criteria, false otherwise.
@@ -72,12 +72,12 @@ def password_strength(test_password) -> bool:
     :param test_password: str
     :return: bool
     """
-    if test_password.isalnum() or test_password.isalpha():
-        return False
     if len(test_password) < PASSWORD_MIN_LENGTH:
-        return False
+        return False, 'Password must be between 8 and 25 characters'
     if len(test_password) > PASSWORD_MAX_LENGTH:
-        return False
+        return False, 'Password must be between 8 and 25 characters'
+    if test_password.isalnum() or test_password.isalpha():
+        return False, 'Password is not complex enough'  
     special_char_check = False
     has_upper = False
     has_lower = False
@@ -95,9 +95,9 @@ def password_strength(test_password) -> bool:
             not has_upper or \
             not has_lower or \
             not has_digit:
-        return False
+        return False, 'Password is not complex enough'
     else:
-        return True
+        return True, 'good'
 
 def generate_password() -> str:
     """
