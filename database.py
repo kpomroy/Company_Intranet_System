@@ -133,6 +133,7 @@ def query_db():
 
 # resetting table to default accounts 
 
+# create_db()
 # clear_table()
 # add_user('kevin', 'f26d84aa5a093ea43137e50dcc3ba6747d7815d3aa9319f3f6894600f5599728cd45cb069cb2262c5d37e79fc7f7ba10314d65af49146cd97b99b0b2', 'admin')
 # add_user('eric', '3abad61c46327e9c269e5a37f25b3afb7f7e50c946d719fd7a9dc803a62d19300cae5fa6301da887feb0980b7c0a25721291d62afd9ac7e3858a0a27', 'accountant')
