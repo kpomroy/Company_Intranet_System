@@ -11,6 +11,7 @@ This flask app models a company intranet system which requires a valid employee 
 To set up the database, either include the user.db file in the directory, or uncomment the bottom section of the database.py file and run the program. To start the flask app, run app.py and follow the link to the site. 
 
 For testing, the usernames and passwords are as follows:
+
 kevin, Password123!
 
 eric, Password123!
